@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcUtils {
 
@@ -112,7 +114,7 @@ public class JdbcUtils {
 
                 for (String j : columnName) {
 
-                    System.out.print(resultset1.getObject(j) + " ");
+                    System.out.println(resultset1.getObject(j) + " ");
                 }
 
             }
@@ -168,6 +170,19 @@ public class JdbcUtils {
 
 
 
+    }
+    public static List<Object> listeEkleme(String tableName, String fieldName ){
+        Statement st =JdbcUtils.createStatement();
+        String query = "Select "+fieldName+ " from "+ tableName;
+        List<Object> fields=new ArrayList<>();
+        try {
+            ResultSet resultSet= st.executeQuery(query);
+            while (resultSet.next()){
+                fields.add(resultSet.getObject(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }return fields;
     }
 
 
